@@ -6,7 +6,7 @@
       <div class="item">
         <!-- <div class="sub-title">{{curProvince}}</div> -->
         <div class="wrap-title">{{curProvince}}</div>
-        <div ref="chartBar" class="bar-chart">
+        <div ref="chartBar" class="bar-chart data-wrapper">
         </div>
       </div>
       <!-- <div class="item">

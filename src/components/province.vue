@@ -22,7 +22,7 @@
       <span class="tip-mobile">参与人数: {{peopleCount}}</span>
       <div class="content">
         <v-center class="center-content" />
-        <v-left class="left-content" />
+        <!-- <v-left class="left-content" /> -->
         <v-right class="right-content" />
       </div>
     </template>
