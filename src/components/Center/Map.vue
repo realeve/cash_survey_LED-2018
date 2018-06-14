@@ -98,11 +98,34 @@ export default {
       this.$http
         .jsonp(url)
         .then(res => {
-          this.provData = res.data.map(item => {
+          let areas = ["内蒙古", "宁夏", "广西", "西藏", "新疆"];
+
+          let data = res.data.map(item => {
             item.name = convertProv(item.name);
             return item;
           });
-          this.chart.setOption(mapChart.refreshMain(this.provData));
+          let newData = data.filter(
+            item => item.name && !areas.includes(item.name)
+          );
+
+          areas.map(prov => {
+            let areaInfo = data.filter(item => prov == item.name);
+            let areaData = {
+              name: prov,
+              value: 0
+            };
+            areaInfo.map(item => {
+              areaData.value += parseInt(item.value);
+            });
+            newData.push(areaData);
+          });
+
+          this.provData = newData;
+
+          var option = mapChart.refreshMain(this.provData);
+          this.chart.setOption(option);
+          // console.log(option);
+
           // let passednum = 0;
           // this.provData.map(item => {
           //   passednum += parseInt(item.passed);
