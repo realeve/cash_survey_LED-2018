@@ -122,8 +122,6 @@ export default {
 
           this.provData = newData;
 
-          var option = mapChart.refreshMain(this.provData);
-          this.chart.setOption(option);
           // console.log(option);
 
           // let passednum = 0;
@@ -131,26 +129,25 @@ export default {
           //   passednum += parseInt(item.passed);
           // })
           // this.$store.commit('setPassed', passednum);
-        })
-        .catch(e => console.log(e));
 
-      if (!this.isPC) {
-        this.needRefresh = false;
-        return;
-      }
+          if (!this.isPC) {
+            var option = mapChart.refreshMain(this.provData);
+            this.chart.setOption(option);
+            this.needRefresh = false;
+            return;
+          }
 
-      url = this.$baseurl + "?s=/addon/Api/Api/getCountByCity";
-      this.$http
-        .jsonp(url)
-        .then(res => {
-          let provData = res.data.map(item => {
-            item.name = item.name.length == 0 ? "(未知)" : item.name;
-            return item;
+          url = this.$baseurl + "?s=/addon/Api/Api/getCountByCity";
+          this.$http.jsonp(url).then(res => {
+            let provData = res.data.map(item => {
+              item.name = item.name.length == 0 ? "(未知)" : item.name;
+              return item;
+            });
+            this.$store.commit("setTop20Cities", provData);
+            let option = mapChart.refreshScatter(provData, newData);
+            this.chart.setOption(option);
+            this.needRefresh = false;
           });
-          let option = mapChart.refreshScatter(provData);
-          this.chart.setOption(option);
-          this.$store.commit("setTop20Cities", provData);
-          this.needRefresh = false;
         })
         .catch(e => console.log(e));
     },

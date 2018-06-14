@@ -56,7 +56,8 @@ function init() {
       top: "bottom",
       calculable: true,
       color: ["#43f", "#ff404a"].reverse(),
-      pieces: [{
+      pieces: [
+        {
           max: 3000
         },
         {
@@ -103,12 +104,15 @@ function init() {
         }
       },
       zoom: 1.2,
-      regions: [{
-        name: "北京",
-        selected: true
-      }]
+      regions: [
+        {
+          name: "北京",
+          selected: true
+        }
+      ]
     },
-    series: [{
+    series: [
+      {
         id: "main",
         name: "参与人数",
         type: "map",
@@ -183,20 +187,30 @@ function init() {
 }
 
 let refreshMain = Data => ({
-  series: [{
-    id: "main",
-    data: Data
-  }],
+  series: [
+    {
+      id: "main",
+      data: Data
+    }
+  ],
   visualMap: {
     max: Math.ceil(Data.sort((b, a) => a.value - b.value)[0].value / 100) * 100
   }
-})
+});
 
-let refreshScatter = Data => {
+let refreshScatter = (Data, newData) => {
   let topData = getTopData(Data);
   let data = convertScatterData(Data);
+  let mainData = refreshMain(newData);
+
   let option = {
-    series: [{
+    visualMap: mainData.visualMap,
+    series: [
+      {
+        id: "main",
+        data: mainData.series[0].data
+      },
+      {
         id: "scatter",
         symbolSize: val => getSymbolSize(topData.sort, val[2]),
         data
