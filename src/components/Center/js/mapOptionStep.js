@@ -54,18 +54,18 @@ function init() {
       calculable: true,
       color: ['#43f', '#ff404a'].reverse(),
       pieces: [{
-        max: 1500
+        max: 20000
       }, {
-        min: 1501,
-        max: 3000
+        min: 20001,
+        max: 30000
       }, {
-        min: 3001,
-        max: 4500
+        min: 30001,
+        max: 40000
       }, {
-        min: 4501,
-        max: 6000
+        min: 40001,
+        max: 50000
       }, {
-        min: 6001
+        min: 50001
       }],
       textStyle: {
         color: '#fff'
