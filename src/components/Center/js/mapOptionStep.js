@@ -1,4 +1,4 @@
-import settings from './geoCoord';
+import settings from "./geoCoord";
 
 let geoCoordMap = settings.geoCoord;
 
@@ -15,7 +15,7 @@ let convertScatterData = data => {
     });
   });
   return arr;
-}
+};
 
 let getTopData = srcData => {
   srcData.sort((a, b) => b.value - a.value);
@@ -30,45 +30,54 @@ let getTopData = srcData => {
       max: data[0].value,
       min: data[data.length - 1].value
     }
-  }
-}
+  };
+};
 
 let getSymbolSize = (sort, val) => {
-  return Math.ceil(10 * (val - sort.min[2]) / (sort.max[2] - sort.min[2])) + 1;
-}
+  return (
+    Math.ceil((10 * (val - sort.min[2])) / (sort.max[2] - sort.min[2])) + 1
+  );
+};
 
 function init() {
   let option = {
     tooltip: {
-      trigger: 'item',
-      // formatter(param) {
-      //   console.log(param);
-      //   let peopleNum = typeof param.data.value == 'undefined' ? 0 : param.data.value;
-      //   return param.name + '<br>参与人数:' + peopleNum + '人';
-      // }
+      trigger: "item",
+      formatter(param) {
+        // console.log(param);
+        let peopleNum =
+          typeof param.data.value == "undefined" ? 0 : param.data.value;
+        return param.name + "<br>参与人数:" + peopleNum + "人";
+      }
     },
     visualMap: {
-      type: 'piecewise',
-      left: 'left',
-      top: 'bottom',
+      type: "piecewise",
+      left: "left",
+      top: "bottom",
       calculable: true,
-      color: ['#43f', '#ff404a'].reverse(),
-      pieces: [{
-        max: 20000
-      }, {
-        min: 20001,
-        max: 30000
-      }, {
-        min: 30001,
-        max: 40000
-      }, {
-        min: 40001,
-        max: 50000
-      }, {
-        min: 50001
-      }],
+      color: ["#43f", "#ff404a"].reverse(),
+      pieces: [
+        {
+          max: 3000
+        },
+        {
+          min: 3001,
+          max: 10000
+        },
+        {
+          min: 10001,
+          max: 20000
+        },
+        {
+          min: 20001,
+          max: 30000
+        },
+        {
+          min: 30001
+        }
+      ],
       textStyle: {
-        color: '#fff'
+        color: "#fff"
       },
       show: false,
       max: 5000,
@@ -77,10 +86,8 @@ function init() {
     geo: {
       show: true,
       roam: false,
-      map: 'china',
-      center: [
-        105, 38
-      ],
+      map: "china",
+      center: [105, 38],
       label: {
         emphasis: {
           show: false
@@ -88,88 +95,92 @@ function init() {
       },
       itemStyle: {
         normal: {
-          areaColor: '#282b76',
-          borderColor: '#fff',
+          areaColor: "#282b76",
+          borderColor: "#fff",
           opacity: 0
         },
         emphasis: {
-          areaColor: '#1273bc'
+          areaColor: "#1273bc"
         }
       },
       zoom: 1.2,
-      regions: [{
-        name: '北京',
-        selected: true
-      }]
+      regions: [
+        {
+          name: "北京",
+          selected: true
+        }
+      ]
     },
-    series: [{
-      id: 'main',
-      name: '参与人数',
-      type: 'map',
-      mapType: 'china',
-      showLegendSymbol: false,
-      roam: false,
-      center: [
-        105, 38
-      ],
-      label: {
-        emphasis: {
-          show: false
-        }
-      },
-      itemStyle: {
-        normal: {
-          areaColor: '#282b76',
-          borderColor: '#fff',
-          opacity: 0.7
-        },
-        emphasis: {
-          areaColor: '#1273bc'
-        }
-      },
-      zoom: 1.2
-    }, {
-      id: 'scatter',
-      type: 'effectScatter',
-      coordinateSystem: 'geo',
-      zlevel: 2,
-      rippleEffect: {
-        brushType: 'stroke'
-      },
-      itemStyle: {
-        normal: {
-          color: '#fff', // '#f4e925',
-          opacity: 0.7
-        }
-      },
-      data: []
-    }, {
-      id: 'top20',
-      name: 'Top20',
-      type: 'effectScatter',
-      coordinateSystem: 'geo',
-      zlevel: 3,
-      rippleEffect: {
-        brushType: 'stroke'
-      },
-      label: {
-        normal: {
-          show: true,
-          position: 'right',
-          formatter: '{b}',
-          textStyle: {
-            color: '#fc0'
+    series: [
+      {
+        id: "main",
+        name: "参与人数",
+        type: "map",
+        mapType: "china",
+        showLegendSymbol: false,
+        roam: false,
+        center: [105, 38],
+        label: {
+          emphasis: {
+            show: false
           }
-        }
+        },
+        itemStyle: {
+          normal: {
+            areaColor: "#282b76",
+            borderColor: "#fff",
+            opacity: 0.7
+          },
+          emphasis: {
+            areaColor: "#1273bc"
+          }
+        },
+        zoom: 1.2
       },
-      itemStyle: {
-        normal: {
-          color: '#fc0',
-          // color: '#0ecdec',
-        }
+      {
+        id: "scatter",
+        type: "effectScatter",
+        coordinateSystem: "geo",
+        zlevel: 2,
+        rippleEffect: {
+          brushType: "stroke"
+        },
+        itemStyle: {
+          normal: {
+            color: "#fff", // '#f4e925',
+            opacity: 0.7
+          }
+        },
+        data: []
       },
-      data: []
-    }]
+      {
+        id: "top20",
+        name: "Top20",
+        type: "effectScatter",
+        coordinateSystem: "geo",
+        zlevel: 3,
+        rippleEffect: {
+          brushType: "stroke"
+        },
+        label: {
+          normal: {
+            show: true,
+            position: "right",
+            formatter: "{b}",
+            textStyle: {
+              color: "#fc0"
+            }
+          }
+        },
+        itemStyle: {
+          normal: {
+            color: "#fc0"
+            // color: '#0ecdec',
+          }
+        },
+        data: []
+      }
+    ]
   };
 
   return option;
@@ -177,12 +188,15 @@ function init() {
 
 let refreshMain = Data => {
   let option = {
-    series: [{
-      id: 'main',
-      data: Data
-    }],
+    series: [
+      {
+        id: "main",
+        data: Data
+      }
+    ],
     visualMap: {
-      max: Math.ceil(Data.sort((b, a) => a.value - b.value)[0].value / 100) * 100
+      max:
+        Math.ceil(Data.sort((b, a) => a.value - b.value)[0].value / 100) * 100
     }
   };
   return option;
@@ -192,15 +206,18 @@ let refreshScatter = Data => {
   let topData = getTopData(Data);
   let data = convertScatterData(Data);
   let option = {
-    series: [{
-      id: 'scatter',
-      symbolSize: val => getSymbolSize(topData.sort, val[2]),
-      data
-    }, {
-      id: 'top20',
-      symbolSize: val => getSymbolSize(topData.sort, val[2]),
-      data: topData.data
-    }]
+    series: [
+      {
+        id: "scatter",
+        symbolSize: val => getSymbolSize(topData.sort, val[2]),
+        data
+      },
+      {
+        id: "top20",
+        symbolSize: val => getSymbolSize(topData.sort, val[2]),
+        data: topData.data
+      }
+    ]
   };
   return option;
 };
